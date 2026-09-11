@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KNN Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="lab">
+      <aside class="bench">
+        <header class="bench-head">
+          <h1>KNN Lab</h1>
+          <p class="tagline">
+            Un carnet pour observer ton k-plus-proches-voisins en action
+          </p>
+        </header>
+
+        <section class="instrument">
+          <h2>1. Échantillon</h2>
+          <label class="dropzone" id="dropzone" for="file-input">
+            <span id="dropzone-label">Déposer ou choisir un fichier .csv</span>
+            <input type="file" id="file-input" accept=".csv" hidden />
+          </label>
+          <p class="hint" id="dataset-status">Aucun jeu de données chargé</p>
+        </section>
+
+        <section class="instrument" id="feature-panel" hidden>
+          <h2>2. Deux axes à observer</h2>
+          <p class="hint">
+            La frontière de décision ne peut se dessiner qu'en 2D — choisis les
+            deux colonnes à tracer.
+          </p>
+          <label class="field">
+            <span>Axe X</span>
+            <select id="feature-x"></select>
+          </label>
+          <label class="field">
+            <span>Axe Y</span>
+            <select id="feature-y"></select>
+          </label>
+        </section>
+
+        <section class="instrument" id="params-panel" hidden>
+          <h2>3. Réglages</h2>
+          <label class="field">
+            <span>k = <span id="k-value" class="readout">3</span></span>
+            <input type="range" id="k-slider" min="1" max="15" value="3" />
+          </label>
+          <label class="field">
+            <span>Distance</span>
+            <select id="distance-fn">
+              <option value="euclidian">Euclidienne</option>
+              <option value="manhattan">Manhattan</option>
+            </select>
+          </label>
+          <button id="redraw-btn" class="btn-primary">
+            Recalculer la frontière
+          </button>
+        </section>
+
+        <section class="instrument" id="eval-panel" hidden>
+          <h2>4. Évaluation</h2>
+          <p class="hint">
+            Découpe le jeu complet (toutes les colonnes) en 80/20 et mesure la
+            précision de ton modèle.
+          </p>
+          <button id="eval-btn" class="btn-secondary">
+            Évaluer sur données réelles
+          </button>
+          <p class="readout-line" id="eval-result"></p>
+        </section>
+      </aside>
+
+      <main class="paper">
+        <div class="paper-inner">
+          <div class="canvas-wrap">
+            <canvas id="plot" width="720" height="600"></canvas>
+            <p class="canvas-hint" id="canvas-hint">
+              Charge un jeu de données pour commencer
+            </p>
+          </div>
+          <div id="legend" class="legend"></div>
+        </div>
+      </main>
+
+      <aside class="logbook">
+        <h2>Carnet de mesures</h2>
+        <p class="hint">
+          Clique un point du graphe pour tester une nouvelle observation.
+        </p>
+        <div id="log-entries" class="log-entries"></div>
+        <div id="vote-result" class="vote-result" hidden></div>
+      </aside>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
